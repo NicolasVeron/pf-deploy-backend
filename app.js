@@ -13,11 +13,17 @@ const fileUpload = require('express-fileupload');
 require('./services/googleAuthServices');
 const paymentRoutes = require("./routes/paymentRoutes")
 
-
+const corsOpts ={
+  origin: '*',
+  credentials: true,
+  methods: ['GET','POST','HEAD','PUT','PATCH','DELETE'],
+  allowedHeaders: ['Content-Type'],
+  exposedHeaders: ['Content-Type']
+};
 
 const app = express();
 app.use(express.json()); //Middleware para que express pueda leer lo que viene por req.body. El método use se usa para usar middleware
-app.use(cors());
+app.use(cors(corsOpts));
 app.use(bodyParser.json({limit:1024*1024*20, type:'application/json'}));
 app.use(bodyParser.urlencoded({extended:true,limit:1024*1024*20,type:'application/x-www-form-urlencoding' }));
 app.use(cookieParser());
