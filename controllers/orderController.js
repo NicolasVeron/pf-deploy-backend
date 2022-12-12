@@ -13,8 +13,8 @@ exports.getAllOrders = async (req, res) => {
     const keyword = req.query.keyword
       ? { name: { $regex: req.query.keyword, $options: "i" } }
       : {};
-    const orders = await Order.find({ ...keyword }); //esto va a devolver una promesa, por eso usamos await
-
+    const orders = await Order.find({ ...keyword }).populate("user"); //esto va a devolver una promesa, por eso usamos await
+    console.log(orders)
     //SEND RESPONSE
     res.status(203).json({
       status: "success",
