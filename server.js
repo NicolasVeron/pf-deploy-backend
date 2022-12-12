@@ -24,6 +24,6 @@ mongoose
 //START THE SERVER
 // console.log(process.env);
 const port = 3001;
-app.listen(port, () => {
+app.listen(process.env.PORT, () => {
   console.log(`Running on port ${port}...`);
 }); //Así se inicializa el servidor, recibe como parámetros el puerto y un callback
