@@ -13,7 +13,7 @@ exports.getAllProducts = async (req, res) => {
       : {};
     const products = await Product.find({ ...keyword }); //esto va a devolver una promesa, por eso usamos await
 
-    console.log(products)
+  
     //SEND RESPONSE
     res.status(203).json({
       status: "success",
