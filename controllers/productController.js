@@ -154,7 +154,7 @@ exports.addReveiw = async (req, res) => {
     product.reviews = [...product.reviews, createdReview._id];
     product.ratingsQuantity = product.reviews.length;
     await product.save();
-    return res.status(201).json({ message: "Review Created Succesfully" });
+    res.status(201).json({ message: "Review Created Succesfully" });
   } catch (error) {
     console.log(error);
     return res.stauts(500).json(error)
