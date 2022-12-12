@@ -157,7 +157,7 @@ exports.addReveiw = async (req, res) => {
     res.status(201).json({ message: "Review Created Succesfully" });
   } catch (error) {
     console.log(error);
-    return res.stauts(500).json(error)
+    res.status(500).json(error)
   }
 };
 
