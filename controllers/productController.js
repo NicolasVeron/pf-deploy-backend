@@ -152,9 +152,8 @@ exports.addReveiw = async (req, res) => {
     };
     //console.log(product.reviews.reduce((a,c)=>c.ratingsAverage + a,0)/product.reviews.length)
     const createdReview = await Review.create(review);
-    console.log('body', req.body);
-    console.log('createdreview', createdReview);
-    
+
+
     product.reviews = [...product.reviews, createdReview._id];
     product.ratingsQuantity = product.reviews.length;
     await product.save();

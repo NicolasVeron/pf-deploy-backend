@@ -8,7 +8,7 @@ router.get("/", verifyTokenAndAdmin, getAllUsers);
 router.get("/:id",verifyTokenAndAuthorization, getUser);
 router.post("/forgotPassword", forgotPassword)
 router.delete("/find/:id", verifyTokenAndAuthorization, deleteUser);
-router.patch("/updateUser", verifyToken, updatedUser);
+router.patch("/updateUser", updatedUser);
 router.patch("/password/update", verifyTokenAndAuthorization, updatePassword)
 router.put("/resetPassword/:resetToken", resetPassword)
 
