@@ -105,9 +105,12 @@ const loginCtrl = async(request,response)=>{
     const {email, password} = request.body;
     try {
         const checkIs = await User.findOne({email});
-        if(!checkIs) return response.status(404).json({message:"Usuario no encontrado"})
-        console.log(checkIs)
+        if(!checkIs) return response.status(404).json({message:"Usuario no encontrado"});
 
+        const {isAllowed} = checkIs;
+        if(!isAllowed){
+            return response.status(500).json({message:"Usuario inhabilitado, contactarse con un administrador"})
+        }
         const passwordHash = checkIs.password;
         const isCorrect = await verified(password, passwordHash);
         if(!isCorrect)return response.status(404).json({message:"Usuario no encontrado"})

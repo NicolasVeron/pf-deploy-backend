@@ -24,6 +24,7 @@ const getAllUsers = async(request,response)=>{
 const getUser = async(request,response)=>{
     try {
       const user = await User.findById(request.params.id);
+      console.log(user);
       //if(user.isAllowed)
       const {password, ...others} = user._doc;
       response.status(200).json(others)  
@@ -37,7 +38,6 @@ const updatedUser = async(request,response)=>{
 
     const user = await User.findById(request.body.userId);
 
-    console.log("User to update: ", user)
     if(user){
         try {
             const {fullName, email, phone_number, image, isAdmin} = user;
