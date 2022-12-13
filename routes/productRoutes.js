@@ -24,7 +24,7 @@ router
 
 router
   .route("/review/:id")
-  .post(verifyTokenAndAuthorization,uploadPhoto.single('file'), productController.addReveiw)
+  .post(uploadPhoto.single('file'), productController.addReveiw)
   .get(productController.getReview)
   .delete(productController.deleteReview)
   
