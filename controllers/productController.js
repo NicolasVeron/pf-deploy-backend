@@ -134,6 +134,7 @@ exports.addReveiw = async (req, res) => {
 
   try {
     const product = await Product.findById(req.params.id);
+    console.log(product)
     //if(!product) return res.stauts(400).json({message:"Product not found"});
 
     /*if(product){
