@@ -24,6 +24,10 @@ const getAllUsers = async(request,response)=>{
 const getUser = async(request,response)=>{
     try {
       const user = await User.findById(request.params.id);
+      const {isAllowed} = user;
+      if(!isAllowed){
+        return response.status(500).json({message:"Usuario inhabilitado, contactarse con un administrador"})
+      }
       console.log(user);
       //if(user.isAllowed)
       const {password, ...others} = user._doc;
@@ -70,14 +74,18 @@ const updatedUser = async(request,response)=>{
 const deleteUser = async(request,response)=>{
     try {
         
-        await User.findByIdAndDelete(request.params.id);
+        const user = await User.findById(request.body.userId);
+        let {isAllowed} = user;
+        user.isAllowed = !isAllowed;
+        await user.save()
+        response.status(201).json({message:"Usuario Inhabilitado Correctamente"})
+        /*await User.findByIdAndDelete(request.params.id);
         if(request.body.returnUsers) {
             const allUsers = await getAllUsers();
             response.status(200).send(allUsers)
         }else{
             response.status(200).json({message:"User has been deleted succesfully"})
-        }
-        
+        }*/   
     } catch (error) {
         response.status(500).json({message:error})
     }
@@ -115,7 +123,10 @@ const forgotPassword = async(request,response)=>{
         if(!user){
             return response.status(404).json({message:"User not found"})
         }
-
+        const {isAllowed} = user;
+        if(!isAllowed){
+            return response.status(500).json({message:"Usuario inhabilitado, contactarse con un administrador"})
+        }
         let token = await Token.findOne({userId: user._id});
         if(token){
             await token.deleteOne();
