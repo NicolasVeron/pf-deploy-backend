@@ -14,7 +14,7 @@ require('./services/googleAuthServices');
 const paymentRoutes = require("./routes/paymentRoutes")
 
 const corsOpts ={
-  origin: '*',
+  origin: 'http://127.0.0.1:5173',
   credentials: true,
   methods: ['GET','POST','HEAD','PUT','PATCH','DELETE'],
   allowedHeaders: ['Content-Type'],
