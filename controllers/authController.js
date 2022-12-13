@@ -106,6 +106,7 @@ const loginCtrl = async(request,response)=>{
     try {
         const checkIs = await User.findOne({email});
         if(!checkIs) return response.status(404).json({message:"Usuario no encontrado"})
+        console.log(checkIs)
 
         const passwordHash = checkIs.password;
         const isCorrect = await verified(password, passwordHash);

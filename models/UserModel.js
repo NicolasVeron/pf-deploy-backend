@@ -24,6 +24,10 @@ const userSchema = mongoose.Schema(
       type: Boolean,
       default: false,
     },
+    isAllowed:{
+      type: Boolean,
+      default: true
+    },
     phone_number: {
       type: Number,
     },

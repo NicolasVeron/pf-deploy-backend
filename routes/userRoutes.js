@@ -4,12 +4,12 @@ const { verifyTokenAndAdmin, verifyTokenAndAuthorization, verifyToken } = requir
 
 
 
-router.get("/", verifyTokenAndAdmin, getAllUsers);
-router.get("/:id", getUser);
-router.post("/forgotPassword", forgotPassword)
-router.delete("/find/:id", verifyTokenAndAuthorization, deleteUser);
+router.get("/",getAllUsers);
+router.get("/:id",getUser);
+router.post("/forgotPassword",forgotPassword)
+router.delete("/find/:id", deleteUser);
 router.patch("/updateUser", updatedUser);
-router.patch("/password/update", verifyTokenAndAuthorization, updatePassword)
+router.patch("/password/update", updatePassword)
 router.put("/resetPassword/:resetToken", resetPassword)
 
 

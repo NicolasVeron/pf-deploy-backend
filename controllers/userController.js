@@ -14,7 +14,6 @@ const getAllUsers = async(request,response)=>{
         const users = query 
             ? await User.find().sort({_id:-1}).limit(1)
             : await User.find();
-        
         response.status(200).json(users)
     } catch (error) {
         response.status(500).json({message:error})
@@ -25,6 +24,7 @@ const getAllUsers = async(request,response)=>{
 const getUser = async(request,response)=>{
     try {
       const user = await User.findById(request.params.id);
+      //if(user.isAllowed)
       const {password, ...others} = user._doc;
       response.status(200).json(others)  
     } catch (error) {
