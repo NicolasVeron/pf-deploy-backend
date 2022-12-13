@@ -192,6 +192,12 @@ exports.getReview = async (req, res) => {
 exports.deleteReview = async(req,res)=>{
   try {
       await Review.findByIdAndDelete(req.params.id);
+      /*const productUpdate = await Product.findByIdAndUpdate(req.params.id, {
+        reviews:[]
+      }, {
+      new: true, 
+      runValidators: true,
+    }); */
       res.status(200).json({message:"Review has been deleted successfully"})
   } catch (error) {
     console.log(error)
