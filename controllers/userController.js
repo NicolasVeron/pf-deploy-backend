@@ -40,11 +40,12 @@ const updatedUser = async(request,response)=>{
     console.log("User to update: ", user)
     if(user){
         try {
-            const {fullName, email, phone_number, image} = user;
+            const {fullName, email, phone_number, image, isAdmin} = user;
             user.email = email;
             user.image = request.body.image || image 
             user.fullName = request.body.fullName || fullName;
             user.phone_number = request.body.phone_number || phone_number;
+            user.isAdmin = request.body.isAdmin || isAdmin;
     
             const updatedUser = await user.save();
 
