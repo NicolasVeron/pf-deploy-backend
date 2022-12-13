@@ -114,7 +114,7 @@ const loginCtrl = async(request,response)=>{
 
         const passwordHash = checkIs.password;
         const isCorrect = await verified(password, passwordHash);
-        if(!isCorrect)return response.status(404).json({message:"Usuario no encontrado"})
+        if(!isCorrect)return response.status(404).json({message:"Error en credenciales"})
         
         if(checkIs && isCorrect){
             const token = generateToken(checkIs);
