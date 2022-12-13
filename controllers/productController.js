@@ -134,7 +134,7 @@ exports.addReveiw = async (req, res) => {
 
   try {
     const product = await Product.findById(req.params.id);
-    console.log(product)
+    
     //if(!product) return res.stauts(400).json({message:"Product not found"});
 
     /*if(product){
@@ -152,13 +152,16 @@ exports.addReveiw = async (req, res) => {
     };
     //console.log(product.reviews.reduce((a,c)=>c.ratingsAverage + a,0)/product.reviews.length)
     const createdReview = await Review.create(review);
+    console.log('body', req.body);
+    console.log('createdreview', createdReview);
+    
     product.reviews = [...product.reviews, createdReview._id];
     product.ratingsQuantity = product.reviews.length;
     await product.save();
     res.status(201).json({ message: "Review Created Succesfully" });
   } catch (error) {
     console.log(error);
-    res.status(500).json(error)
+    //res.status(500).json(error)
   }
 };
 
