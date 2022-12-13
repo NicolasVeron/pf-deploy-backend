@@ -23,7 +23,9 @@ const corsOpts ={
 
 const app = express();
 app.use(express.json()); //Middleware para que express pueda leer lo que viene por req.body. El método use se usa para usar middleware
-app.use(cors(corsOpts));
+app.use(cors({
+  origin:"http://127.0.0.1:5173"
+}));
 app.use(bodyParser.json({limit:1024*1024*20, type:'application/json'}));
 app.use(bodyParser.urlencoded({extended:true,limit:1024*1024*20,type:'application/x-www-form-urlencoding' }));
 app.use(cookieParser());
