@@ -73,19 +73,26 @@ const updatedUser = async(request,response)=>{
 //Delete a User
 const deleteUser = async(request,response)=>{
     try {
-        
-        const user = await User.findById(request.params.id);
-        let {isAllowed} = user;
-        user.isAllowed = !isAllowed;
-        await user.save()
-        response.status(201).json({message:"Usuario Inhabilitado Correctamente"})
-        /*await User.findByIdAndDelete(request.params.id);
+        await User.findByIdAndDelete(request.params.id);
         if(request.body.returnUsers) {
             const allUsers = await getAllUsers();
             response.status(200).send(allUsers)
         }else{
             response.status(200).json({message:"User has been deleted succesfully"})
-        }*/   
+        }  
+    } catch (error) {
+        console.log(error)
+        response.status(500).json({message:error})
+    }
+}
+
+const banUser = async(request,response)=>{
+    try {
+        const user = await User.findById(request.params.id);
+        let {isAllowed} = user;
+        user.isAllowed = !isAllowed;
+        await user.save()
+        response.status(201).json({message:"Usuario Inhabilitado Correctamente"})
     } catch (error) {
         console.log(error)
         response.status(500).json({message:error})
@@ -220,5 +227,6 @@ module.exports = {
     updatedUser,
     updatePassword,
     forgotPassword,
-    resetPassword
+    resetPassword,
+    banUser
 }
