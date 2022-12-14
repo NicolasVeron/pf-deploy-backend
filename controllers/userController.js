@@ -74,7 +74,7 @@ const updatedUser = async(request,response)=>{
 const deleteUser = async(request,response)=>{
     try {
         
-        const user = await User.findById(request.body.userId);
+        const user = await User.findById(request.params.id);
         let {isAllowed} = user;
         user.isAllowed = !isAllowed;
         await user.save()
