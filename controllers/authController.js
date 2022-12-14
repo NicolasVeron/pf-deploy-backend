@@ -127,11 +127,12 @@ const loginCtrl = async(request,response)=>{
                 secure:true
             })
             console.log(checkIs)
-            const {isAdmin, fullName,_id, image} = checkIs;
+            const {isAdmin, fullName,_id, image, isAllowed} = checkIs;
             const loginData = {
                 token,
                 user: {
                     isAdmin,
+                    isAllowed,
                     fullName,
                     email,
                     userId: _id,
