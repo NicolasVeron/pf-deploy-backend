@@ -36,7 +36,8 @@ exports.createOrder = asyncHandler(async (req, res) => {
     taxPrice,
     shippingPrice,
     totalPrice,
-    userId
+    userId,
+    userEmail
   } = req.body;
   if (orderItems && orderItems.length === 0) {
     res.status(400);
@@ -52,6 +53,40 @@ exports.createOrder = asyncHandler(async (req, res) => {
       totalPrice,
     });
     const createOrder = await order.save();
+
+    const mappedOrderItems = orderItems.reduce((a, b) => {
+      return a + '<tr><td>' + b.name + '</td><td>' + b.qty + '</td><td>' + b.price + '</td></tr>';
+    })
+
+    const subject = "Orden de compra - Fashion Clothing"
+    const send_to = userEmail
+    const sent_from = process.env.EMAIL_USER
+    const message = `
+    <h1><strong>Tu compra en Fashion Clothing se ha efectuado con exito</strong></h1>
+
+    <h2>Tus datos de compra son...</h2>
+
+    <div>
+      <table>
+        <thead>
+          <tr>
+            <th>Nombre</th>
+            <th>Cantidad</th>
+            <th>Precio</th>
+          </tr>
+        </thead>
+        <tbody>
+        ${mappedOrderItems}
+        </tbody>
+      </table>
+    </div>
+
+    <h2>Con un total de $${totalPrice}</h2>
+    
+    <p>- Fashion Cloth Mode</p>`
+
+    await sendEmail(subject, message, send_to, sent_from);
+
     res.status(201).json(createOrder);
   }
 });
