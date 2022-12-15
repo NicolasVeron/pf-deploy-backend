@@ -26,7 +26,7 @@ const registerCtrl = async(request,response)=>{
             if(checkIs) return response.status(500).json({message:"El email ya esta en uso!"})    
             
             const passHash = await encrypt(password);
-            const newPhoneNumber = Number(phone_number.replace(/\s/g, ''))
+            //const newPhoneNumber = Number(phone_number.replace(/\s/g, ''))
             const defaultImage = "https://steamuserimages-a.akamaihd.net/ugc/885384897182110030/F095539864AC9E94AE5236E04C8CA7C2725BCEFF/"
             
             //Create new User
@@ -34,7 +34,7 @@ const registerCtrl = async(request,response)=>{
                 fullName,
                 password:passHash,
                 email,
-                phone_number: newPhoneNumber,
+                phone_number,
                 isAdmin,
                 image: image || defaultImage
             });
