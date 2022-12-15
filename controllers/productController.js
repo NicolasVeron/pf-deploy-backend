@@ -13,7 +13,6 @@ exports.getAllProducts = async (req, res) => {
       : {};
     const products = await Product.find({ ...keyword }); //esto va a devolver una promesa, por eso usamos await
 
-  
     //SEND RESPONSE
     res.status(203).json({
       status: "success",
@@ -70,7 +69,7 @@ exports.createProduct = async (req, res) => {
       images,
       stock,
       tallaCamiseta,
-      tallaPantalon,
+      tallaPantalón,
       marca,
       gender,
       summary,
@@ -86,11 +85,12 @@ exports.createProduct = async (req, res) => {
       category,
       stock,
       tallaCamiseta: tallaCamiseta ? tallaCamiseta : [],
-      tallaPantalon: tallaPantalon ? tallaPantalon : [],
+      tallaPantalón: tallaPantalón ? tallaPantalón : [],
       images: {
         public_id: images[0],
         url: images[0],
       },
+      marca,
       gender,
       summary,
     });
@@ -134,7 +134,6 @@ exports.addReveiw = async (req, res) => {
 
   try {
     const product = await Product.findById(req.params.id);
-    
     //if(!product) return res.stauts(400).json({message:"Product not found"});
 
     /*if(product){
@@ -152,15 +151,13 @@ exports.addReveiw = async (req, res) => {
     };
     //console.log(product.reviews.reduce((a,c)=>c.ratingsAverage + a,0)/product.reviews.length)
     const createdReview = await Review.create(review);
-
-
     product.reviews = [...product.reviews, createdReview._id];
     product.ratingsQuantity = product.reviews.length;
     await product.save();
-    res.status(201).json({ message: "Review Created Succesfully" });
+    return res.status(201).send({ message: "Review Created Succesfully" });
   } catch (error) {
     console.log(error);
-    //res.status(500).json(error)
+    return res.status(500).json({message: error})
   }
 };
 
@@ -170,6 +167,9 @@ exports.getReview = async (req, res) => {
   try {
     const { id } = req.params;
     const reviews = await Review.findById(id).populate("userId");
+
+    console.log(reviews)
+
     if (!reviews) {
       return res.status(404).json({ message: "Review Not Found" });
     }
@@ -192,12 +192,6 @@ exports.getReview = async (req, res) => {
 exports.deleteReview = async(req,res)=>{
   try {
       await Review.findByIdAndDelete(req.params.id);
-      /*const productUpdate = await Product.findByIdAndUpdate(req.params.id, {
-        reviews:[]
-      }, {
-      new: true, 
-      runValidators: true,
-    }); */
       res.status(200).json({message:"Review has been deleted successfully"})
   } catch (error) {
     console.log(error)
