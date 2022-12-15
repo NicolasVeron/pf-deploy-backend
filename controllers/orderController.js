@@ -1,5 +1,6 @@
 const express = require("express");
 const Order = require("./../models/orderModel");
+const Product = require("./../models/productModels")
 const asyncHandler = require("express-async-handler");
 
 const orderRouter = express.Router();
@@ -52,6 +53,14 @@ exports.createOrder = asyncHandler(async (req, res) => {
       shippingPrice,
       totalPrice,
     });
+
+    for(const { qty, product } of orderItems) {
+      const productFoundById = await Product.findById(product)
+      productFoundById.stock = productFoundById.stock - qty
+      const savedProduct = await productFoundById.save()
+      // console.log("UpdatedProductStock: ", savedProduct)
+    }
+
     const createOrder = await order.save();
 
     const mappedOrderItems = orderItems.reduce((a, b) => {
